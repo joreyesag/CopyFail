@@ -32,6 +32,7 @@ cd "$KERNEL_SRC"
 echo ""
 echo -e "${CYAN}[2/5] Guardando hash del commit vulnerable (evidencia)...${NC}"
 VULN_HASH=$(git rev-parse HEAD)
+mkdir -p /workspaces/copy-fail-challenge/kernel/
 echo "$VULN_HASH" > /workspaces/copy-fail-challenge/kernel/vuln_commit.txt
 echo "  Hash: $VULN_HASH"
 
@@ -54,16 +55,20 @@ scripts/config --enable TMPFS
 scripts/config --enable NET
 scripts/config --enable UNIX
 scripts/config --enable INET
-# ── LA PIEZA CLAVE: API crypto expuesta a userspace ──────────────────────────
+
+# ── API CRYPTO & INFRAESTRUCTURA DE BAJO NIVEL (FIX PARA KERNEL PANIC) ──
 scripts/config --enable CRYPTO
+scripts/config --enable CRYPTO_MANAGER         # Motor interno de algoritmos (Obligatorio)
+scripts/config --enable CRYPTO_NULL            # Requerido internamente por authencesn
 scripts/config --enable CRYPTO_USER_API        # AF_ALG base
 scripts/config --enable CRYPTO_USER_API_AEAD   # algif_aead  ← VULNERABLE
 scripts/config --enable CRYPTO_USER_API_SKCIPHER
-scripts/config --enable CRYPTO_AUTHENCESN      # el template que escribe de más
+scripts/config --enable CRYPTO_AUTHENCESN      # El template que escribe de más
 scripts/config --enable CRYPTO_AES
 scripts/config --enable CRYPTO_CBC
 scripts/config --enable CRYPTO_HMAC
 scripts/config --enable CRYPTO_SHA256
+
 # Setuid binaries (necesario para la escalada de privilegios)
 scripts/config --enable MULTIUSER
 # Misc necesario
