@@ -1,0 +1,14 @@
+--- a/kernel/linux/crypto/algif_aead.c
++++ b/kernel/linux/crypto/algif_aead.c
+@@ -237,8 +237,9 @@
+ 			rsgl_src = areq->tsgl;
+ 	}
+ 
+-	aead_request_set_crypt(&areq->cra_u.aead_req, rsgl_src,
+-			       areq->first_rsgl.sgl.sgt.sgl, used, ctx->iv);
++	aead_request_set_crypt(&areq->cra_u.aead_req, 
++			       ctx->enc ? rsgl_src : tsgl_src,
++			       areq->first_rsgl.sgl.sgt.sgl, used, ctx->iv);
+ 	aead_request_set_ad(&areq->cra_u.aead_req, ctx->aead_assoclen);
+ 	aead_request_set_tfm(&areq->cra_u.aead_req, tfm);
+ 
