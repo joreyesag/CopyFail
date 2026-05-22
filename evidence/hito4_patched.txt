@@ -1,0 +1,7 @@
+=== REPORTE DE VALIDACIÓN DINÁMICA - HITO 4 ===
+Kernel Versión: Linux 6.12.0
+Usuario actual: uid=1001(student) gid=1001(student) groups=1001(student)
+Resultado de la ejecución del exploit:
+[-] Fallo: El kernel interceptó la desalineación de la memoria RAM.
+[-] Error devuelto por el sistema: EBADMSG (Bad message) / Permission denied.
+[-] Estado del sistema: Parche condicional verificado con éxito. Inmune.
