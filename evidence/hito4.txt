@@ -1,0 +1,15 @@
+=== HITO 4: PARCHE PERMANENTE DE SEGURIDAD APLICADO ===
+Fecha: Fri May 22 22:24:55 UTC 2026
+Hostname: copy-fail-Jordan-Reyes
+Kernel compilado con éxito: bzImage_patched
+Archivo modificado: kernel/linux/crypto/algif_aead.c
+
+Mitigación Estructural:
+Se modificó la función _aead_recvmsg() introduciendo una validación condicional 
+en la llamada a aead_request_set_crypt(). Cuando la operación es de descifrado 
+(!ctx->enc), se fuerza al núcleo a utilizar el scatterlist de transmisión 
+original (tsgl_src) en lugar de reutilizar el buffer de recepción (rsgl_src). 
+
+Resultado: Se rompe el solapamiento de memoria RAM en el anillo 0, evitando 
+que fallos lógicos de tags criptográficos corrompan de forma permanente el 
+page cache de binarios del sistema (como /usr/bin/su). Vector mitigado de raíz.
